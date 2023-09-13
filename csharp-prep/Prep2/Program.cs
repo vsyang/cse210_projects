@@ -12,7 +12,7 @@ class Program
 
         string letter = "";
 
-        if (percent >= 90)
+        if (percent >= 94)
         {
             letter = "A";
         }
@@ -41,7 +41,7 @@ class Program
         }
         else
         {
-            Console.WriteLine("Maybe it will be better next time.")
+            Console.WriteLine("Maybe it will be better next time.");
         }
 
 

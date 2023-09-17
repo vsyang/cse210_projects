@@ -10,15 +10,18 @@ class Program
 
         while (true)
         {
+            Console.WriteLine();
             Console.WriteLine("Please select one of the following options:");
             Console.WriteLine("1. Write");
             Console.WriteLine("2. Display");
             Console.WriteLine("3. Save");
             Console.WriteLine("4. Load");
             Console.WriteLine("5. Quit");
+            Console.WriteLine();
+            
             Console.Write("What would you like to do? ");
-
             string choice = Console.ReadLine();
+            
             //found this while using Google: https://www.w3schools.com/cs/cs_switch.php#gsc.tab=0
             switch (choice)
             {
@@ -28,6 +31,7 @@ class Program
                     Console.WriteLine($"Prompt: {prompt}");
                     Console.Write("> ");
                     string response = Console.ReadLine();
+                    Console.WriteLine();
                     journal.AddEntry(new JournalEntry(DateTime.Now, prompt, response));
                     break;
 
@@ -45,11 +49,12 @@ class Program
 
                 case "4":
                     // Load the journal from a file
-                    Console.Write("Enter a filename to load: ");
+                    Console.WriteLine("Enter a filename to load:");
+                    Console.Write("> ");
                     string loadFileName = Console.ReadLine();
                     journal.LoadJournalEntry(loadFileName);
                     break;
-
+                    // Ponder: would it be easier to have a pre-existing folder to save and load from so user just has to save and load without entering a filename?
                 case "5":
                     // Quit
                     Console.WriteLine("Exiting the program.");
@@ -138,6 +143,9 @@ class Journal
 
     public void LoadJournalEntry(string fileName)
     {
+        //makes sure we start with an empty list before loading entries to avoid confusion
+        //read this on https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1.clear?view=net-7.0
+        //watched A LOT of youtube videos as well
         entries.Clear();
         using (StreamReader inputFile = new StreamReader(fileName))
         {

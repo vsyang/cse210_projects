@@ -30,6 +30,25 @@ public class Reference
         _endVerse = endVerse;
     }
 
+    public Reference(string reference)
+    {
+        string[] parts = reference.Split(' ');
+        if (parts.Length == 2)
+        {
+            string[] chapterVerse = parts[1].Split(':');
+                    
+            if (chapterVerse.Length == 2 && int.TryParse(chapterVerse[0], out int chapter) && int.TryParse(chapterVerse[1], out int verse))
+            {
+                _book = parts[0];
+                _chapter = chapter;
+                _verse = verse;
+            }
+        //out->used when a function is still doing its work but gives info along the way
+        //return->final result
+
+        }
+    }
+
     public string GetDisplayText()
     {
         if(_endVerse > 0)

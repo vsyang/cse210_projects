@@ -1,11 +1,29 @@
 using System;
+using System.IO;
+using System.Collections.Generic;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Reference reference = new Reference("John", 3, 16);
-        Scripture scripture = new Scripture(reference, "For God so loved the world, that He gave His only begotten Son, that whosoever believeth in Him should not perish, but have everlasting life.");
+        string[]lines = File.ReadAllLines("kjv.txt");
+        List<string> scriptures = new List<string>();
+        foreach (string line in lines)
+        {
+            scriptures.Add(line);
+        }
+               
+        Random random = new Random();
+        int randomIndex = random.Next(scriptures.Count);
+        string selectedScripture = scriptures[randomIndex];
+
+        //split whole string to seperate scripture reference from verse
+        string[] parts = selectedScripture.Split(' ');
+        string scriptureReference = parts[0] + " " + parts[1];
+        string restOfScripture = string.Join(" ", parts, 2, parts.Length - 2);
+
+        Reference reference = new Reference(scriptureReference);
+        Scripture scripture = new Scripture(reference, restOfScripture);
 
         bool quit = false;
 
@@ -33,13 +51,6 @@ class Program
                 {
                     scripture.HideRandomWords(1);
                 }
-                // scripture.HideRandomWords(3);
-                // Console.WriteLine(scripture.GetDisplayText());
-
-                // if (scripture.IsCompletelyHidden())
-                // {
-                //     quit = true;
-                // }
             }        
         }
     }

@@ -11,6 +11,12 @@ public class Scripture
     private Reference _reference;
     private List<Word> _words;
 
+    //placing wordcount in scripture, because the scripture class is coordinating actions on whole string/scripture
+    public int WordCount
+    {
+        get{return _words.Count(word => !word.IsHidden());}
+    }
+
     public Scripture(Reference reference, string text)
     {
         _reference = reference;
@@ -69,5 +75,25 @@ public class Scripture
 
         return displayText;
     }
+
+    public void HideAllWords(int count)
+    {
+        for(int i = 0; i < count; i++)
+        {
+            if(i < _words.Count)
+            {
+                _words[i].Hide();
+            }
+        }
+    }
+
+    public void HideAllWords()
+    {
+        foreach (Word word in _words)
+        {
+            word.Hide();
+        }
+    }
+
 }
 

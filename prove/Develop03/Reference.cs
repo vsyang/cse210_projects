@@ -39,9 +39,9 @@ public class Reference
                     
             if (chapterVerse.Length == 2 && int.TryParse(chapterVerse[0], out int chapter) && int.TryParse(chapterVerse[1], out int verse))
             {
-                _book = parts[0];
-                _chapter = chapter;
-                _verse = verse;
+            _book = parts[0];
+            _chapter = chapter;
+            _verse = verse;
             }
         //out->used when a function is still doing its work but gives info along the way
         //return->final result

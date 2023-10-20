@@ -4,6 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello FinalProject World!");
+       UserInterface userInterface = new UserInterface();
+       userInterface.Start();
     }
 }

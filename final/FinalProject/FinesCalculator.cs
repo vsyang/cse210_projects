@@ -6,6 +6,8 @@ public class FinesCalculator
     {
         _fines = fines;
     }
+
+    
 }
 
 //calculates fines for late returns and lost books

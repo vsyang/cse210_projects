@@ -2,6 +2,12 @@ public class Librarian
 {
     private string _username;
     private int _fines;
+    
+    public Librarian(string username, int fines)
+    {
+        _username = username;
+        _fines = fines;
+    }
 
 }
 
@@ -9,4 +15,3 @@ public class Librarian
 // specific functions for librarians like: 
 // user account management 
 // handling book request
-// generating library reports

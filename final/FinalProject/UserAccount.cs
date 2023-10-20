@@ -3,9 +3,10 @@ public class UserAccount
     private string _username;
     private string _password;
 
-    public UserAccount()
+    public UserAccount(string username, string password)
     {
-
+        _username = username;
+        _password = password;
     }
 
     public void Checkout()
@@ -25,7 +26,7 @@ public class UserAccount
 
     public void Fines()
     {
-        
+
     }
 }
 

@@ -5,6 +5,12 @@ public abstract class Book
     protected string _author;
     protected string _isbn;
     protected string _type;
+    public string Genre { get; private set; }
+    public string Title { get; private set; }
+    public string Author { get; private set; }
+    public string ISBN { get; private set; }
+    public string Type { get; private set; }
+
 
     public Book(string genre, string title, string author, string isbn, string type)
     {

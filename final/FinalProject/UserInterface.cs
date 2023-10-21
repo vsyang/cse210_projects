@@ -1,28 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-
 public class UserInterface
 {
     private Dictionary<string, string> _userAccount;
-    private Dictionary<string, string> _librarian;
+    private Librarian librarian;
     private LibraryCatalog libraryCatalog;
     
 
     public UserInterface()
     {
         _userAccount = new Dictionary<string, string>();
-        _librarian = new Dictionary<string, string>()
-        
-        {
-            {"Vanessa5280", "ILoveBooks"},
-            {"Matty303", "HuntNFish"},
-            {"LilyBoo", "SmartAndLovely"},
-            {"MylaBaby", "BeautifulStrength"},
-            {"JinuNatsu", "NeverLeaveMom"},
-        };
-        libraryCatalog = new LibraryCatalog("AllBooks.txt");
-
-        
+        librarian = new Librarian();
+        libraryCatalog = new LibraryCatalog("AllBooks.txt");        
     }
 
     public void Start()
@@ -30,7 +17,8 @@ public class UserInterface
         bool exit = false;
         while (!exit)
         {
-            libraryCatalog.LoadBooks();
+            libraryCatalog.LoadBooks("AllBooks.txt");
+
             Console.WriteLine();
             Console.WriteLine("Welcome to the Library!");
             Console.WriteLine();
@@ -71,7 +59,7 @@ public class UserInterface
         Console.Write("Enter your password: ");
         string password = Console.ReadLine();
 
-        if (_librarian.ContainsKey(username) && _librarian[username] == password)
+        if (librarian.IsLibrarian(username, password))
         {
             Console.WriteLine();
             Console.WriteLine($"Welcome back {username}!");
@@ -103,6 +91,7 @@ public class UserInterface
             Console.WriteLine(" 3. Add fine to user account");
             Console.WriteLine(" 4. Remove fine on user account");
             Console.WriteLine(" 5. Back to main menu");
+            Console.WriteLine("Select a choice from the menu: ");
 
             string librarianInput = Console.ReadLine();
             
@@ -113,7 +102,7 @@ public class UserInterface
                     break;
 
                 case "2":
-                    //RemoveBook();
+                    RemoveBook();
                     break;
 
                 case "3":
@@ -163,6 +152,12 @@ public class UserInterface
         }
     }
 
+    public void RemoveBook()
+    {
+        libraryCatalog.RemoveBook();
+    }
+
+
     public void NormalUserInterface()
     {
         Console.WriteLine();
@@ -170,8 +165,4 @@ public class UserInterface
     }
 
 }
-
-
-
-
 

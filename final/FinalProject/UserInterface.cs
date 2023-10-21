@@ -1,9 +1,12 @@
+using System.Collections;
 using System.Collections.Generic;
 
 public class UserInterface
 {
     private Dictionary<string, string> _userAccount;
     private Dictionary<string, string> _librarian;
+    private LibraryCatalog libraryCatalog;
+    
 
     public UserInterface()
     {
@@ -17,6 +20,9 @@ public class UserInterface
             {"MylaBaby", "BeautifulStrength"},
             {"JinuNatsu", "NeverLeaveMom"},
         };
+        libraryCatalog = new LibraryCatalog("AllBooks.txt");
+
+        
     }
 
     public void Start()
@@ -24,6 +30,7 @@ public class UserInterface
         bool exit = false;
         while (!exit)
         {
+            libraryCatalog.LoadBooks();
             Console.WriteLine();
             Console.WriteLine("Welcome to the Library!");
             Console.WriteLine();
@@ -53,36 +60,107 @@ public class UserInterface
         }
     }
 
-    private void SignIn()
+    private string SignIn()
     {        
         Console.WriteLine();
         
         Console.Write("Enter your username: ");
         string username = Console.ReadLine();
         
+
         Console.Write("Enter your password: ");
         string password = Console.ReadLine();
 
         if (_librarian.ContainsKey(username) && _librarian[username] == password)
         {
-            Console.WriteLine("Welcome back *Librarian*!");
-            LibrarianInterface();
+            Console.WriteLine();
+            Console.WriteLine($"Welcome back {username}!");
+            LibrarianInterface(username);
         }
         else if (_userAccount.ContainsKey(username) && _userAccount[username] == password)
         {
-            Console.WriteLine("Welcome back *User*!");
+            Console.WriteLine($"Welcome back {username}!");
             NormalUserInterface();
         }
         else
         {
             Console.WriteLine("Incorrect username or password.");
         }
+        return username;
     }
 
-    public void LibrarianInterface()
+    public void LibrarianInterface(string username)
     {
-        Console.WriteLine();
-        Console.WriteLine("");
+        Console.WriteLine(username);
+        bool quit = false;
+        while (!quit)
+        {
+
+            Console.WriteLine();
+            Console.WriteLine("Librarian Menu Options:");
+            Console.WriteLine(" 1. Add book to library catalog");
+            Console.WriteLine(" 2. Remove book from library catalog");
+            Console.WriteLine(" 3. Add fine to user account");
+            Console.WriteLine(" 4. Remove fine on user account");
+            Console.WriteLine(" 5. Back to main menu");
+
+            string librarianInput = Console.ReadLine();
+            
+            switch (librarianInput)
+            {
+                case "1":
+                    AddBook();
+                    break;
+
+                case "2":
+                    //RemoveBook();
+                    break;
+
+                case "3":
+                    //AddFine();
+                    break;
+
+                case "4":
+                    //RemoveFine();
+                    break;
+
+                case "5":
+                    Console.WriteLine("Returning to main menu");
+                    quit = true;
+                    break;            
+            }
+        }
+    }
+
+    public void AddBook()
+    {
+        Console.Write("Genre: ");
+        string genre = Console.ReadLine();
+
+        Console.Write("Title: ");
+        string title = Console.ReadLine();
+
+        Console.Write("Author: ");
+        string author = Console.ReadLine();
+
+        Console.Write("ISBN: ");
+        string isbn = Console.ReadLine();
+        
+        Console.Write("Is this book \n  1. Physical\n  2. Electronic\n  >");
+        string addInput = Console.ReadLine();
+
+
+        if (addInput == "1" || addInput == "2")
+        {
+            string type = addInput == "1" ? "Physical" : "Electronic";
+            libraryCatalog.AddBook(genre, title, author, isbn, type);
+            Console.WriteLine("New book has been added to the library catalog.");
+        }
+
+        else
+        {
+            Console.WriteLine("Invalid choice.");
+        }
     }
 
     public void NormalUserInterface()
@@ -94,19 +172,6 @@ public class UserInterface
 }
 
 
-
-
-//*user*
-//Search()
-//Borrow()
-//Renew()
-//Return()
-//CheckFines()
-
-//*librarian*
-// AddBook()
-// RemoveBook()
-// FinesCalculator()
 
 
 

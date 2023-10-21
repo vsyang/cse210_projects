@@ -1,14 +1,18 @@
 public abstract class Book
 {
-    private string _title;
-    private string _author;
-    private string _isbn;
+    protected string _genre;
+    protected string _title;
+    protected string _author;
+    protected string _isbn;
+    protected string _type;
 
-    public Book(string title, string author, string isbn)
+    public Book(string genre, string title, string author, string isbn, string type)
     {
+        _genre = genre;
         _title = title;
         _author = author;
         _isbn = isbn;
+        _type = type;
     }
 
     public abstract void Checkout();
@@ -17,6 +21,7 @@ public abstract class Book
 
     public abstract void Renew();
     public abstract void TurnInDate();
+    public abstract string Representation(string fileName);
 }
 
 

@@ -1,6 +1,6 @@
 public class PhysicalBook : Book
 {
-    public PhysicalBook(string title, string author, string isbn) : base(title, author, isbn)
+    public PhysicalBook(string genre, string title, string author, string isbn, string type) : base(genre, title, author, isbn, type)
     {
 
     }
@@ -8,28 +8,32 @@ public class PhysicalBook : Book
     public override void Checkout()
     {
         Console.WriteLine();
-        //public override void Checkout(UserAccount user) //update status to checked out
+        Console.WriteLine("Book has been checked out.");
     }
 
     public override void Return()
     {
-
+        Console.WriteLine();
+        Console.WriteLine("Book has been returned.");
     }
 
     public override void Renew()
     {
-
+        Console.WriteLine();
+        Console.WriteLine("Book has been renewed.");
     }
 
     public override void TurnInDate()
     {
+        Console.WriteLine();
+        Console.WriteLine("Turn in by *2weeks from checkout date*");
        
+    }
+
+    public override string Representation(string fileName)
+    {
+        return $"{_genre} | {_title} | {_author} | {_isbn} | {_type}";
     }
 }
 
 
-// inherit from Book
-// manage the circulation of physical books
-
-//{
-//}

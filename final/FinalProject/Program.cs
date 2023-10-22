@@ -9,6 +9,7 @@ class Program
         LibraryCatalog libraryCatalog = new LibraryCatalog("AllBooks.txt");
         Librarian librarian = new Librarian(libraryCatalog);
         UserInterface userInterface = new UserInterface(librarian, libraryCatalog);
+        UserAccountManager userAccountManager = new UserAccountManager();
         userInterface.Start();
     }
 }

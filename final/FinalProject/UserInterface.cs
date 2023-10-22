@@ -1,17 +1,16 @@
 public class UserInterface
 {
-    private Dictionary<string, string> _userAccount;
     private Librarian librarian;
     private LibraryCatalog libraryCatalog;
     private UserAccountManager userAccountManager;
+    private UserAccount currentUserAccount;
     
 
     public UserInterface(Librarian librarian, LibraryCatalog libraryCatalog)
     {
-        _userAccount = new Dictionary<string, string>();
         this.librarian = new Librarian(libraryCatalog);
         this.libraryCatalog = new LibraryCatalog("AllBooks.txt"); 
-        userAccountManager = new UserAccountManager();       
+        this.userAccountManager = new UserAccountManager();     
     }
 
     public void Start()
@@ -72,6 +71,7 @@ public class UserInterface
         }
         else if (userAccountManager.ValidateUserAccount(username, password))
         {
+            currentUserAccount = userAccountManager.GetUserAccountByUsername(username);
             Console.WriteLine($"Welcome back {username}!");
             NormalUserInterface();
         }
@@ -163,6 +163,7 @@ public class UserInterface
         bool quit = false;
         while (!quit)
         {
+            Console.WriteLine();
             Console.WriteLine("What to do today:");
             Console.WriteLine(" 1. Search for a book");
             Console.WriteLine(" 2. Borrow book");
@@ -171,7 +172,6 @@ public class UserInterface
             Console.WriteLine(" 5. Return to main menu");
             Console.WriteLine("What would you like to do?");
             string normalUserInput = Console.ReadLine();
-            Console.WriteLine("This is where they will see fine if any fine or fee is owed");
 
             switch (normalUserInput)
             {
@@ -188,6 +188,7 @@ public class UserInterface
                     break;
 
                 case "4":
+                    currentUserAccount.ViewFines();
                     break;
 
                 case "5":

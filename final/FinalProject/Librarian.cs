@@ -3,6 +3,8 @@ public class Librarian
     private Dictionary<string, string> _librarian;
     private Dictionary<string, decimal> _userFines;
     private LibraryCatalog _libraryCatalog;
+    private FinesCalculator finesCalculator;
+    private UserAccountManager userAccountManager;
 
 
     public Librarian(LibraryCatalog libraryCatalog)
@@ -20,6 +22,8 @@ public class Librarian
         };
 
         _userFines = new Dictionary<string, decimal>();
+        finesCalculator = new FinesCalculator();
+        userAccountManager = new UserAccountManager();
     }
 
     public bool IsLibrarian(string username, string password)
@@ -30,27 +34,37 @@ public class Librarian
     public void AddFine(string username, decimal amount)
     {
         Console.WriteLine();
-        Console.WriteLine("Which user to add Fine: ");
-        
-        if (_userFines.ContainsKey(username))
+        Console.WriteLine("Enter the username of the customer to add a fine: ");
+        string input = Console.ReadLine();
+
+        // Look for the user in the user accounts managed by the UserAccountManager.
+        UserAccount userAccount = userAccountManager.GetUserAccountByUsername(input);
+
+        if (userAccount != null)
         {
-            _userFines[username] += amount;
+            // Calculate the fine - don't have time to be fancy so only charging for lost books
+            decimal fine = finesCalculator.CalculateLostBookFine(amount);
+            //userAccount.ApplyFine(amount);
+            userAccountManager.UpdateUserFine(input, amount);
+
+            Console.WriteLine($"Fine of ${fine} added to {input}'s account for a lost book.");
         }
         else
         {
-            _userFines[username] = amount;
+            Console.WriteLine($"{input} not found. No fine added.");
         }
-        Console.WriteLine($"Fine of ${amount} added to {username}'s account.");
     }
 
     public void RemoveFine(string username, decimal amount)
     {
-        if (_userFines.ContainsKey(username))
+        if (userAccountManager.GetUserAccountByUsername(username) != null)
         {
-            _userFines[username] -= amount;
-            if (_userFines[username] < 0)
+            userAccountManager.GetUserAccountByUsername(username).Fines -= amount;
+
+            // Ensure fines are non-negative.
+            if (userAccountManager.GetUserAccountByUsername(username).Fines < 0)
             {
-                _userFines[username] = 0; // Fines cannot be negative
+                userAccountManager.GetUserAccountByUsername(username).Fines = 0;
             }
             Console.WriteLine($"Fine of ${amount} removed from {username}'s account.");
         }

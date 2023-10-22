@@ -6,7 +6,9 @@ class Program
 {
     static void Main(string[] args)
     {
-       UserInterface userInterface = new UserInterface();
-       userInterface.Start();
+        LibraryCatalog libraryCatalog = new LibraryCatalog("AllBooks.txt");
+        Librarian librarian = new Librarian(libraryCatalog);
+        UserInterface userInterface = new UserInterface(librarian, libraryCatalog);
+        userInterface.Start();
     }
 }

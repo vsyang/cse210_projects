@@ -1,8 +1,9 @@
 public class ElectronicBook : Book
 {
-    public ElectronicBook(string genre, string title, string author, string isbn, string type) : base(genre, title, author, isbn, type)
+    private bool _isAvailable;
+    public ElectronicBook(string genre, string title, string author, string isbn, string type, bool isAvailable = false) : base(genre, title, author, isbn, type)
     {
-        
+        _isAvailable = isAvailable;
     }
 
     public override void Checkout()
@@ -15,12 +16,6 @@ public class ElectronicBook : Book
     {
         Console.WriteLine();
         Console.WriteLine("Book has been returned.");
-    }
-
-    public override void Renew()
-    {
-        Console.WriteLine();
-        Console.WriteLine("Book has been renewed");
     }
 
     public override void TurnInDate()

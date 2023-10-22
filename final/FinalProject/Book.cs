@@ -5,11 +5,28 @@ public abstract class Book
     protected string _author;
     protected string _isbn;
     protected string _type;
-    public string Genre { get; private set; }
-    public string Title { get; private set; }
-    public string Author { get; private set; }
-    public string ISBN { get; private set; }
-    public string Type { get; private set; }
+    public string Genre
+    {
+        get { return _genre; }
+    }
+    public string Title
+    {
+        get { return _title; }
+    }
+    public string Author
+    {
+        get { return _author; }
+    }
+    public string ISBN
+    {
+        get { return _isbn; }
+    }
+    public string Type
+    {
+        get {return _type; }
+    }
+
+    
 
 
     public Book(string genre, string title, string author, string isbn, string type)
@@ -25,20 +42,8 @@ public abstract class Book
 
     public abstract void Return();
 
-    public abstract void Renew();
     public abstract void TurnInDate();
+    
     public abstract string Representation(string fileName);
 }
 
-
-    
-    // abstract class
-// properties = title, author, isbn
-// methods = Checkout(), Return(), Renew()
-
-
-//ie:
-//public abstract class Book
-//{
-//  public abstract void CheckOut(UserAccount user) //handle process of book being checked out
-//}

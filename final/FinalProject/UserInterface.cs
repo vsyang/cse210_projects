@@ -3,13 +3,15 @@ public class UserInterface
     private Dictionary<string, string> _userAccount;
     private Librarian librarian;
     private LibraryCatalog libraryCatalog;
+    private UserAccountManager userAccountManager;
     
 
-    public UserInterface()
+    public UserInterface(Librarian librarian, LibraryCatalog libraryCatalog)
     {
         _userAccount = new Dictionary<string, string>();
-        librarian = new Librarian();
-        libraryCatalog = new LibraryCatalog("AllBooks.txt");        
+        this.librarian = new Librarian(libraryCatalog);
+        this.libraryCatalog = new LibraryCatalog("AllBooks.txt"); 
+        userAccountManager = new UserAccountManager();       
     }
 
     public void Start()
@@ -17,8 +19,6 @@ public class UserInterface
         bool exit = false;
         while (!exit)
         {
-            libraryCatalog.LoadBooks("AllBooks.txt");
-
             Console.WriteLine();
             Console.WriteLine("Welcome to the Library!");
             Console.WriteLine();
@@ -32,16 +32,21 @@ public class UserInterface
             switch(input)
             {
                 case "1":
-                SignIn();
-                break;
+                    SignIn();
+                    break;
 
                 case "2":
-                //CreateAccount();
-                break;
+                    Console.Write("Enter a username: ");
+                    string newUsername = Console.ReadLine();
+                    Console.Write("Enter a password: ");
+                    string newPassword = Console.ReadLine();
+                    //UserAccount userAccount = new UserAccount(newUsername, newPassword, 0, new List<string>(), new Dictionary<string, DateTime>());
+                    userAccountManager.CreateUserAccount(newUsername, newPassword);
+                    break;
 
                 case "3":
-                exit = true;
-                break;
+                    exit = true;
+                    break;
 
 
             }
@@ -63,9 +68,9 @@ public class UserInterface
         {
             Console.WriteLine();
             Console.WriteLine($"Welcome back {username}!");
-            LibrarianInterface(username);
+            LibrarianInterface();
         }
-        else if (_userAccount.ContainsKey(username) && _userAccount[username] == password)
+        else if (userAccountManager.ValidateUserAccount(username, password))
         {
             Console.WriteLine($"Welcome back {username}!");
             NormalUserInterface();
@@ -77,9 +82,9 @@ public class UserInterface
         return username;
     }
 
-    public void LibrarianInterface(string username)
+    public void LibrarianInterface()
     {
-        Console.WriteLine(username);
+        Console.WriteLine();
         bool quit = false;
         while (!quit)
         {
@@ -102,15 +107,15 @@ public class UserInterface
                     break;
 
                 case "2":
-                    RemoveBook();
+                    librarian.RemoveBook();
                     break;
 
                 case "3":
-                    //AddFine();
+                    librarian.AddFine("", 0);
                     break;
 
                 case "4":
-                    //RemoveFine();
+                    librarian.RemoveFine("", 0);
                     break;
 
                 case "5":
@@ -120,7 +125,6 @@ public class UserInterface
             }
         }
     }
-
     public void AddBook()
     {
         Console.Write("Genre: ");
@@ -152,17 +156,45 @@ public class UserInterface
         }
     }
 
-    public void RemoveBook()
-    {
-        libraryCatalog.RemoveBook();
-    }
-
 
     public void NormalUserInterface()
     {
         Console.WriteLine();
-        Console.WriteLine("");
+        bool quit = false;
+        while (!quit)
+        {
+            Console.WriteLine("What to do today:");
+            Console.WriteLine(" 1. Search for a book");
+            Console.WriteLine(" 2. Borrow book");
+            Console.WriteLine(" 3. Return book");
+            Console.WriteLine(" 4. View fines/fees");
+            Console.WriteLine(" 5. Return to main menu");
+            Console.WriteLine("What would you like to do?");
+            string normalUserInput = Console.ReadLine();
+            Console.WriteLine("This is where they will see fine if any fine or fee is owed");
+
+            switch (normalUserInput)
+            {
+                case "1":
+                    Console.WriteLine();
+                    Console.WriteLine("Here are the books at this library:");
+                    libraryCatalog.LibraryCatalogList();
+                    break;
+
+                case "2":
+                    break;
+
+                case "3":
+                    break;
+
+                case "4":
+                    break;
+
+                case "5":
+                    quit = true;
+                    break;
+            }
+        }
+
     }
-
 }
-

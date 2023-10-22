@@ -2,18 +2,21 @@ public class Librarian
 {
     private Dictionary<string, string> _librarian;
     private Dictionary<string, decimal> _userFines;
+    private LibraryCatalog _libraryCatalog;
 
 
-    public Librarian()
+    public Librarian(LibraryCatalog libraryCatalog)
     {
+            _libraryCatalog = libraryCatalog;
             _librarian = new Dictionary<string, string>()
         
         {
-            {"Vanessa5280", "ILoveBooks"},
+            {"Vanessa", "ILoveBooks"},
             {"Matty303", "HuntNFish"},
             {"LilyBoo", "SmartAndLovely"},
             {"MylaBaby", "BeautifulStrength"},
             {"JinuNatsu", "NeverLeaveMom"},
+            {"test", "test"}
         };
 
         _userFines = new Dictionary<string, decimal>();
@@ -26,6 +29,9 @@ public class Librarian
 
     public void AddFine(string username, decimal amount)
     {
+        Console.WriteLine();
+        Console.WriteLine("Which user to add Fine: ");
+        
         if (_userFines.ContainsKey(username))
         {
             _userFines[username] += amount;
@@ -54,30 +60,74 @@ public class Librarian
         }
     }
 
-    // You can add more methods here for librarian-specific actions.
-
-
     public void AddBook(string genre, string title, string author, string isbn, LibraryCatalog catalog, string type)
     {
-        if (type == "Physical")
         {
-            PhysicalBook physicalBook = new PhysicalBook(genre, title, author, isbn, type);
-            catalog.AddBook(genre, title, author, isbn, type);
+            Console.Write("Genre: ");
+            string _genre = Console.ReadLine();
+
+            Console.Write("Title: ");
+            string _title = Console.ReadLine();
+
+            Console.Write("Author: ");
+            string _author = Console.ReadLine();
+
+            Console.Write("ISBN: ");
+            string _isbn = Console.ReadLine();
+            
+            Console.Write("Is this book \n  1. Physical\n  2. Electronic\n  >");
+            string addInput = Console.ReadLine();
+
+
+            if (addInput == "1" || addInput == "2")
+            {
+                string _type = addInput == "1" ? "Physical" : "Electronic";
+                _libraryCatalog.AddBook(genre, title, author, isbn, type);
+                Console.WriteLine("New book has been added to the library catalog.");
+            }
+
+            else
+            {
+                Console.WriteLine("Invalid choice.");
+            }
         }
-        else if (type == "Electronic")
+
+    }
+
+public void RemoveBook()
+    {
+        // Call LibraryCatalogList to display the library catalog
+        _libraryCatalog.LibraryCatalogList();
+
+        Console.WriteLine();
+        Console.WriteLine("Library Catalog");
+
+        // Display the list of books
+        for (int i = 0; i < _libraryCatalog.Books.Count; i++)
         {
-            ElectronicBook electronicBook = new ElectronicBook(genre, title, author, isbn, type);
-            catalog.AddBook(genre, title, author, isbn, type);
+            Console.WriteLine($"{i + 1}. {_libraryCatalog.Books[i].Title} by {_libraryCatalog.Books[i].Author}");
+        }
+
+        Console.Write("\nWhich book needs to be removed? Enter the number: ");
+        if (int.TryParse(Console.ReadLine(), out int selection))
+        {
+            if (selection > 0 && selection <= _libraryCatalog.Books.Count)
+            {
+                int index = selection - 1;
+                _libraryCatalog.Books.RemoveAt(index);
+                _libraryCatalog.UpdateLibraryFile();
+
+                Console.WriteLine("The selected book has been removed from the library");
+            }
+            else
+            {
+                Console.WriteLine("Invalid book selection");
+            }
         }
         else
         {
-            Console.WriteLine("Unsupported book type");
+            Console.WriteLine("Invalid input. Please enter a valid number.");
         }
-    }
-
-    public void RemoveBook()
-    {
-        
     }
 }
 

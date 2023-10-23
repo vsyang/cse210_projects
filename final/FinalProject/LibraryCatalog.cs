@@ -1,5 +1,3 @@
-using System.IO.Enumeration;
-
 public class LibraryCatalog
 {
     private string _fileName;
@@ -96,9 +94,70 @@ public class LibraryCatalog
         File.WriteAllLines(_fileName, lines);
     }
 
-    // public void Search()
-    // {
+    public List<PhysicalBook> GetPhysicalBooks()
+    {
+        return _books.OfType<PhysicalBook>().ToList();
+    }
 
-    // }
 
+    public bool CheckoutBook(string bookTitle, UserAccount userAccount)
+    {
+        // Find the book in the library catalog.
+        Book book = _books.FirstOrDefault(b => b.Title == bookTitle);
+
+        if (book != null)
+        {
+            if (book is PhysicalBook physicalBook)
+            {
+                // Check if it's a PhysicalBook and is available for checkout.
+                if (physicalBook.IsAvailable)
+                {
+                    // Update the book status
+                    physicalBook.Checkout();
+                    return true;
+                }
+            }
+            else if (book is ElectronicBook electronicBook)
+            {
+                if (electronicBook.IsAvailable)
+                {
+                    electronicBook.Checkout();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public void ReturnBook(Book book)
+    {
+        // Find the book in the library catalog.
+        if (_books.Contains(book))
+        {
+            // Return the book to the library.
+            if (book is PhysicalBook physicalBook)
+            {
+                physicalBook.Return();
+            }
+        }
+    }
+
+    public List<Book> GetAvailableBooks()
+    {
+        return _books.Where(book => (book is PhysicalBook physicalBook) && physicalBook.IsAvailable).ToList();
+    }
+
+    public List<Book> GetCheckedOutBooks(UserAccount userAccount)
+    {
+        List<Book> checkedOutBooks = new List<Book>();
+        
+        foreach (string title in userAccount.Books)
+        {
+            Book book = _books.Find(b => b.Title == title);
+            if (book != null)
+            {
+                checkedOutBooks.Add(book);
+            }
+        }
+        return checkedOutBooks;
+    }   
 }

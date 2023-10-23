@@ -6,3 +6,39 @@ Mystery | None Of This Is True | Lisa Jewell | 1982179007 | Electronic
 Romance | The Notebook | Nicholas Sparks | 1455558028 | Physical
 Science Fiction | The Hunger Games | Suzanne Collins | 9780439023528 | Electronic
 Science Fiction | Catching Fire | Suzanne Collins | 1514349809 | Electronic
+Historical Fiction | A Tale of Two Cities | Charles Dickens |9780486406510 | Physical
+Fantasy | The Little Prince | Antoine de Saint-Exupery | 9780156012195 | Physical
+Fantasy | Harry Potter and the Philosopher's Stone | J.K. Rowling | 9781781100349 | Electronic
+Mystery | And Then There Were None | Agatha Christie | 9780062073488 | Physical
+Fantasy | The Hobbit | J.R.R. Tolkien | 9780007525508 | Physical
+Adventure | She: A History of Adventure | H. Rider Haggard | 9783735757043 | Electronic
+Mystery | The Da Vinci Code | Dan Brown | 9783838705910 | Electronic
+Fantasy | Harry Potter and the Chamber of Secrets | J.K. Rowling | 9780439064873 | Physical
+Fantasy | Harry Potter and the Prisoner of Azkaban | J.K. Rowling | 978-0545582933 | Physical
+Fantasy | Harry Potter and the Goblet of Fire | J.K. Rowling | 780439139595 | Physical
+Fantasy | Harry Potter and the Half-Blood | J.K. Rowling | 9780439784542 | Physical
+Fantasy | Harry Potter and the Deathly Hallows | J.K. Rowling | 9781781192435 | Electronic
+Coming-of-Age | The Catcher in the Rye | J.D. Salinger | 9780316769488 | Physical
+Romance | The Bridges of Madison County | Robert James Waller | 9780446364492 | Physical
+Children's Literature | Anne of Green Gables | Lucy Maud Montgomery | 9781514638811 | Physical
+Children's Literature | Black Beauty | Anna Sewell | 9781503251281 | Physical
+Thriller | The Eagle Has Landed | Jack Higgins | 9781597809993 | Physical
+Fantasy | Watership Down | Richard Adams | 9781984857194 | Physical
+Children's Literature | Charlotte's Web | E.B. White | 9783257611885 | Electronic
+Children's Literature | The Tale of Peter Rabbit | Beatrix Potter | 9783839127315 | Electronic
+Children's Literature | The Very Hungry Caterpillar | Eric Carle | 9780399226908 | Physical
+Gothic | To Kill a Mockingbird | Harper Lee | 9782253115847 | Physical
+Gothic | Flowers in the Attic | V.C. Andrews | 9780007370887 | Electronic
+Mystery | Angels & Demons | Dan Brown | 9780743486624 | Physical
+Tragedy | The Great Gatsby | F. Scott Fitzgerald | 9780393885125 | Electronic
+Historical Fiction | Gone with the Wind | Margaret Mitchell | 9780582418059 | Physical
+Gothic | Rebecca | Daphne du Maurier | 978364964105 | Physical
+Children's Literature | James and the Giant Peach | Roald Dahl | 9788419366542 | Electronic
+Thriller | The Girl on the Train | Paula Hawkins | 9783641158125 | Electronic
+Fantasy | Mockingjay | Suzanne Collins | 9789862139462 | Electronic
+Thriller | Jaws | Peter Benchley | 9780330243827 | Physical
+Children's Literature | Charlie and the Chocolate Factory | Roald Dahl | 9786584824065 | Electronic
+Children's Literature | The Adventures of Pinocchio | Carlo Collodi | 9786074535723 | Electronic
+Mystery | Where the Crawdads Sing | Delia Owens | 9783446264199 | Physical
+Children's Literature | Matilda | Roald Dahl | 9783644574519 | Electronic
+Children's Literature | Goodnight Moon | Margaret Wise Brown | 9780060207052 | Physical

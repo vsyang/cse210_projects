@@ -6,10 +6,10 @@ class Program
 {
     static void Main(string[] args)
     {
-        LibraryCatalog libraryCatalog = new LibraryCatalog("AllBooks.txt");
-        Librarian librarian = new Librarian(libraryCatalog);
-        UserInterface userInterface = new UserInterface(librarian, libraryCatalog);
-        UserAccountManager userAccountManager = new UserAccountManager();
+        // LibraryCatalog libraryCatalog = new LibraryCatalog("AllBooks.txt");
+        // Librarian librarian = new Librarian(libraryCatalog);
+        UserInterface userInterface = new UserInterface();
+        // UserAccountManager userAccountManager = new UserAccountManager();
         userInterface.Start();
     }
 }

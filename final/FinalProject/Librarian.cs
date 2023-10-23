@@ -44,8 +44,9 @@ public class Librarian
         {
             // Calculate the fine - don't have time to be fancy so only charging for lost books
             decimal fine = finesCalculator.CalculateLostBookFine(amount);
+            
             //userAccount.ApplyFine(amount);
-            userAccountManager.UpdateUserFine(input, amount);
+            userAccountManager.AddUserFine(input, fine);
 
             Console.WriteLine($"Fine of ${fine} added to {input}'s account for a lost book.");
         }
@@ -57,20 +58,28 @@ public class Librarian
 
     public void RemoveFine(string username, decimal amount)
     {
-        if (userAccountManager.GetUserAccountByUsername(username) != null)
+        Console.WriteLine();
+        Console.WriteLine("Enter the username of the customer to add a fine: ");
+        string input = Console.ReadLine();
+
+        // Look for the user in the user accounts managed by the UserAccountManager.
+        UserAccount userAccount = userAccountManager.GetUserAccountByUsername(input);
+
+        if (userAccount != null)
         {
-            userAccountManager.GetUserAccountByUsername(username).Fines -= amount;
+            amount -= 13;
+            userAccountManager.RemoveUserFine(input, amount);
 
             // Ensure fines are non-negative.
-            if (userAccountManager.GetUserAccountByUsername(username).Fines < 0)
+            if (userAccount.Fines < 0)
             {
-                userAccountManager.GetUserAccountByUsername(username).Fines = 0;
+                userAccount.Fines = 0;
             }
-            Console.WriteLine($"Fine of ${amount} removed from {username}'s account.");
+            Console.WriteLine($"Fine of ${amount} removed from {input}'s account.");
         }
         else
         {
-            Console.WriteLine($"{username} does not have any fines.");
+            Console.WriteLine($"{input} does not have any fines.");
         }
     }
 
@@ -144,4 +153,3 @@ public void RemoveBook()
         }
     }
 }
-

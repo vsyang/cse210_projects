@@ -6,18 +6,22 @@ public class UserInterface
     private UserAccount currentUserAccount;
     
 
-    public UserInterface(Librarian librarian, LibraryCatalog libraryCatalog)
+    public UserInterface()
     {
-        this.librarian = new Librarian(libraryCatalog);
-        this.libraryCatalog = new LibraryCatalog("AllBooks.txt"); 
-        this.userAccountManager = new UserAccountManager();     
+        // librarian = new Librarian(libraryCatalog);
+        // libraryCatalog = new LibraryCatalog("AllBooks.txt"); 
+        // userAccountManager = new UserAccountManager();  
     }
 
     public void Start()
-    {
+    {   
         bool exit = false;
         while (!exit)
         {
+            librarian = new Librarian(libraryCatalog);
+            libraryCatalog = new LibraryCatalog("AllBooks.txt"); 
+            userAccountManager = new UserAccountManager();  
+            
             Console.WriteLine();
             Console.WriteLine("Welcome to the Library!");
             Console.WriteLine();
@@ -120,6 +124,7 @@ public class UserInterface
 
                 case "5":
                     Console.WriteLine("Returning to main menu");
+
                     quit = true;
                     break;            
             }
@@ -127,6 +132,7 @@ public class UserInterface
     }
     public void AddBook()
     {
+        Console.WriteLine();
         Console.Write("Genre: ");
         string genre = Console.ReadLine();
 
@@ -182,20 +188,75 @@ public class UserInterface
                     break;
 
                 case "2":
+                    Console.WriteLine();
+                    Console.Write("Enter the title of the book you want to borrow: ");
+                    string bookTitle = Console.ReadLine();
+
+                    // Check if the checkout was successful
+                    bool checkoutSuccess = currentUserAccount.CheckOutBook(bookTitle, libraryCatalog.Books, userAccountManager, currentUserAccount.Username);
+
+                    if(checkoutSuccess)
+                    {
+                        userAccountManager.SaveUserAccounts();
+                    }
                     break;
 
                 case "3":
+                    Console.WriteLine();
+                    Console.WriteLine("Here are your books:");
+                    if (currentUserAccount.Books.Count == 0)
+                    {
+                        Console.WriteLine("You haven't checked out any books.");
+                    }
+                    else
+                    {
+                        for (int i = 0; i < currentUserAccount.Books.Count; i++)
+                        {
+                            Console.WriteLine($"{i + 1}. {currentUserAccount.Books[i]}");
+                        }
+
+                        // Ask the user to select a book to return
+                        Console.Write("Enter the number of the book you want to return (or 0 to cancel): ");
+                        if (int.TryParse(Console.ReadLine(), out int selectedBookIndex) && selectedBookIndex > 0 && selectedBookIndex <= currentUserAccount.Books.Count)
+                        {
+                            string selectedBookTitle = currentUserAccount.Books[selectedBookIndex - 1];
+
+                            // Check if the return was successful
+                            bool returnSuccess = currentUserAccount.ReturnBook(selectedBookTitle);
+                            if (returnSuccess)
+                            {
+                                // Update the user's data and save it
+                                currentUserAccount.Books.RemoveAt(selectedBookIndex - 1);
+                                currentUserAccount.DueDates.Remove(selectedBookTitle);
+                                userAccountManager.SaveUserAccounts();
+                                Console.WriteLine($"You've successfully returned '{selectedBookTitle}'.");
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Failed to return '{selectedBookTitle}'.");
+                            }
+                        }
+                        else if (selectedBookIndex == 0)
+                        {
+                            Console.WriteLine("Return canceled.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid input. Please enter a valid book number or 0 to cancel.");
+                        }
+                    }
                     break;
 
                 case "4":
+                    Console.WriteLine();
                     currentUserAccount.ViewFines();
                     break;
 
                 case "5":
+                    Console.WriteLine("\nThank you for visiting us!\nReturning to Main Menu");
                     quit = true;
                     break;
             }
         }
-
     }
 }

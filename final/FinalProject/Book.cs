@@ -26,9 +26,6 @@ public abstract class Book
         get {return _type; }
     }
 
-    
-
-
     public Book(string genre, string title, string author, string isbn, string type)
     {
         _genre = genre;
@@ -41,8 +38,6 @@ public abstract class Book
     public abstract void Checkout();
 
     public abstract void Return();
-
-    public abstract void TurnInDate();
     
     public abstract string Representation(string fileName);
 }

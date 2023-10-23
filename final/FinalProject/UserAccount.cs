@@ -5,7 +5,6 @@ public class UserAccount
     public decimal Fines { get; set; }
     public List<string> Books { get; set; }
     public Dictionary<string, DateTime> DueDates { get; set; } // Track due dates for checked-out books
-
     public UserAccount(string username, string password, decimal fines, List<string> books, Dictionary<string, DateTime> dueDates)
     {
         Username = username;
@@ -15,28 +14,53 @@ public class UserAccount
         DueDates = dueDates;
     }
 
-    // Method to check out a book
-    public bool CheckOutBook(string bookTitle, DateTime dueDate)
+    public bool CheckOutBook(string _title, List<Book> libraryCatalog, UserAccountManager userManager, string username)
     {
+        // Check if the book exists in the library catalog
+        Book bookToCheckout = libraryCatalog.FirstOrDefault(book => book.Title == _title);
+
+        if (bookToCheckout == null)
+        {
+            Console.WriteLine("The book you requested is not available in the library catalog.");
+            return false;
+        }
+
         // Check if the book is already checked out
-        if (Books.Contains(bookTitle))
+        if (Books.Contains(_title))
         {
             Console.WriteLine("You've already checked out this book.");
             return false;
         }
 
-        // Check if the due date is valid (e.g., not in the past)
-        if (dueDate < DateTime.Now)
+        // Calculate the due date based on book type
+        DateTime dueDate;
+
+        if (bookToCheckout is PhysicalBook)
         {
-            Console.WriteLine("Invalid due date. Please select a future date.");
+            dueDate = DateTime.Now.AddDays(10);
+        }
+        else if (bookToCheckout is ElectronicBook)
+        {
+            dueDate = DateTime.Now.AddDays(14);
+        }
+        else
+        {
+            Console.WriteLine("Unsupported book type.");
             return false;
         }
 
-        Books.Add(bookTitle);
-        DueDates[bookTitle] = dueDate;
-        Console.WriteLine($"You've checked out '{bookTitle}' until {dueDate:yyyy-MM-dd}.");
+        Books.Add(_title);
+        DueDates[_title] = dueDate;
+
+        // Format the due date
+        string newDateFormat = dueDate.ToString("MM-dd-yyyy");
+
+        Console.WriteLine($"You've checked out '{_title}'\nReturn book by {newDateFormat}.");
+
         return true;
     }
+
+
 
     // Method to return a book
     public bool ReturnBook(string bookTitle)
@@ -51,26 +75,9 @@ public class UserAccount
         DateTime dueDate = DueDates[bookTitle];
         DateTime currentDate = DateTime.Now;
 
-        Books.Remove(bookTitle);
-        DueDates.Remove(bookTitle);
-        Console.WriteLine($"You've successfully returned '{bookTitle}'.");
-
         return true;
     }
 
-    // public void ApplyFine(decimal amount)
-    // {
-    //     if (amount < 0)
-    //     {
-    //         Console.WriteLine("Invalid fine amount.");
-    //         return;
-    //     }
-
-    //     // Update the user's fines.
-    //     Fines += amount;
-    // }
-
-    // Method to view fines
     public void ViewFines()
     {
         if (Fines == 0)
@@ -83,4 +90,3 @@ public class UserAccount
         }
     }
 }
-

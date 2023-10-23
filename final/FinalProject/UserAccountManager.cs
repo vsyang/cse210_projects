@@ -8,7 +8,7 @@ public class UserAccountManager
         LoadUserAccounts();
     }
 
-    private void LoadUserAccounts()
+    public void LoadUserAccounts()
     {
         if (File.Exists("NormalUserAccounts.txt"))
         {
@@ -63,6 +63,7 @@ public class UserAccountManager
                 writer.WriteLine($"{user.Username},{user.Password},{user.Fines},{booksAndDueDates}");
             }
         }
+        
     }
 
     public void CreateUserAccount(string newUsername, string newPassword)
@@ -76,9 +77,10 @@ public class UserAccountManager
 
     public UserAccount GetUserAccountByUsername(string username)
     {
+
         return userAccounts.Find(user => user.Username == username);
     }
-
+  
     public bool ValidateUserAccount(string username, string password)
     {
         UserAccount user = GetUserAccountByUsername(username);
@@ -93,13 +95,30 @@ public class UserAccountManager
         }
         return false;
     }
-   public void UpdateUserFine(string username, decimal amount)
+   public void AddUserFine(string username, decimal amount)
     {
-        UserAccount user = GetUserAccountByUsername(username);
-        if (user != null)
+        // Loop through userAccounts find the correct users
+        // Update the fines on that that user
+        foreach (UserAccount item in userAccounts)
         {
-            user.Fines += amount;
-            SaveUserAccounts(); // Save the updated user account data
+            if(item.Username == username)
+            {
+                item.Fines += amount;
+            }
         }
+        // save back to userAccounts txt file
+        SaveUserAccounts();
+    }
+
+    public void RemoveUserFine(string username, decimal amount)
+    {
+        foreach (UserAccount item in userAccounts)
+        {
+            if(item.Username == username)
+            {
+                item.Fines = amount;
+            }
+        }
+        SaveUserAccounts();
     }
 }

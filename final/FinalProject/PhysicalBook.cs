@@ -33,11 +33,17 @@ public class PhysicalBook : Book
     }
     
 
-    public void ReturnPhysicalBook(LibraryCatalog libraryCatalog)
+
+    public override void Checkout()
+    {
+        Console.WriteLine();
+        Console.WriteLine("The book has been checked out.");
+    }
+
+    public override void Return()
     {
         if (_isAvailable)
         {
-            libraryCatalog.ReturnBook(this);
             _isAvailable = true;
             Console.WriteLine($"'{Title}' has been returned.");
         }
@@ -46,16 +52,6 @@ public class PhysicalBook : Book
             Console.WriteLine($"'{Title}' is not checked out.");
         }
     }
-
-    public override void Checkout()
-    {
-        
-    }
-
-    public override void Return()
-    {
-            
-    }  
 
     public override string Representation(string fileName)
     {
